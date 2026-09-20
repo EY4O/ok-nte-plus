@@ -342,3 +342,21 @@ class TestDailyRoutineStart(unittest.TestCase):
         self.assertTrue(routine_has_active_tasks([SimpleNamespace(enabled=True, running=False)]))
         self.assertTrue(routine_has_active_tasks([SimpleNamespace(enabled=False, running=True)]))
         self.assertFalse(routine_has_active_tasks([SimpleNamespace(enabled=False, running=False)]))
+
+
+class TestCityDeliveryRoutineEntry(unittest.TestCase):
+    """City Delivery waits for the player, so it must stay last and stay opt-in."""
+
+    def test_city_delivery_is_the_last_entry(self):
+        from src.tasks.daily.CityDeliveryTask import CityDeliveryTask
+        from src.tasks.daily.DailyRoutineTask import DAILY_ROUTINE_ENTRIES
+
+        last = DAILY_ROUTINE_ENTRIES[-1]
+        self.assertEqual(last.task_id, "city_delivery")
+        self.assertIs(last.task_class, CityDeliveryTask)
+
+    def test_city_delivery_is_not_enabled_by_default(self):
+        from src.tasks.daily.DailyRoutineTask import DAILY_ROUTINE_ENTRIES
+
+        entry = next(e for e in DAILY_ROUTINE_ENTRIES if e.task_id == "city_delivery")
+        self.assertFalse(entry.enabled_by_default)
