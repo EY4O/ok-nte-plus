@@ -39,7 +39,8 @@ msgstr "执行任务时开启以避免月卡中断"
 msgid "Ultimate Key"
 msgstr "极轨技快捷键"
 
-msgid "Your computer's local time when the monthly card will popup, hour in (1-24)"
+msgid ""
+"Your computer's local time when the monthly card will popup, hour in (1-24)"
 msgstr "月卡弹出时的电脑本地时间，小时 (1-24)"
 
 msgid "[内置代码]"
@@ -180,7 +181,9 @@ msgstr ""
 msgid "关联特征"
 msgstr ""
 
-msgid "此为 Python 脚本, 不可在此修改.\n请在对应的源文件中直接修改代码."
+msgid ""
+"此为 Python 脚本, 不可在此修改.\n"
+"请在对应的源文件中直接修改代码."
 msgstr ""
 
 msgid "没有找到匹配的指令。"
@@ -274,7 +277,9 @@ msgstr ""
 msgid "Counter Attack Threshold"
 msgstr "反击触发阈值"
 
-msgid "Counter attack sound recognition threshold (0.0-1.0, lower is more sensitive)"
+msgid ""
+"Counter attack sound recognition threshold (0.0-1.0, lower is more "
+"sensitive)"
 msgstr "反击声音识别阈值（0.0-1.0，越低越灵敏）"
 
 msgid "Dodge Threshold"
@@ -827,7 +832,9 @@ msgstr ""
 msgid "每2小时重新登入"
 msgstr ""
 
-msgid "除了选择内建存在的<b style=\"color: #0078d7;\">{combo}</b>外,您也可以自己输入名称来建立自己的<b style=\"color: #0078d7;\">{combo}</b>."
+msgid ""
+"除了选择内建存在的<b style=\"color: #0078d7;\">{combo}</b>外,您也可以自己输入名称来建立自己的<b "
+"style=\"color: #0078d7;\">{combo}</b>."
 msgstr ""
 
 msgid "九百九十九夜"
@@ -863,8 +870,13 @@ msgstr "后台输出设备"
 msgid "Open SoundVolumeCommandLine Download Page"
 msgstr "打开 SoundVolumeCommandLine 下载页面"
 
-msgid "Optionally route the game to a selected Windows output device while it is in the background. SoundVolumeCommandLine is not bundled; select your own downloaded copy."
-msgstr "当游戏处于后台时，可选择性地将游戏音频路由到选定的 Windows 输出设备。本软件未内置 SoundVolumeCommandLine，请选择您自己下载的版本。"
+msgid ""
+"Optionally route the game to a selected Windows output device while it is in"
+" the background. SoundVolumeCommandLine is not bundled; select your own "
+"downloaded copy."
+msgstr ""
+"当游戏处于后台时，可选择性地将游戏音频路由到选定的 Windows 输出设备。本软件未内置 "
+"SoundVolumeCommandLine，请选择您自己下载的版本。"
 
 msgid "Switch game audio output when the game window leaves the foreground"
 msgstr "当游戏窗口离开前台时，切换游戏音频输出"
@@ -878,7 +890,8 @@ msgstr "游戏处于后台时使用的输出设备"
 msgid "Open the official NirSoft SoundVolumeCommandLine page"
 msgstr "打开 NirSoft SoundVolumeCommandLine 官方页面"
 
-msgid "SoundVolumeCommandLine (svcl.exe);;Executable Files (*.exe);;All Files (*)"
+msgid ""
+"SoundVolumeCommandLine (svcl.exe);;Executable Files (*.exe);;All Files (*)"
 msgstr "SoundVolumeCommandLine (svcl.exe);;可执行文件 (*.exe);;所有文件 (*)"
 
 msgid "Select svcl.exe"
@@ -1217,11 +1230,33 @@ msgstr "队伍识别"
 msgid "提示"
 msgstr "提示"
 
-msgid "<p><b style=\"color: #d83b01;\">注意：</b>此面板 <b style=\"color: #d83b01;\">不会</b> 在进入战斗或更换阵容时实时自动刷新或同步显示。<br>这是个用于向数据库关联或添加 <b style=\"color: #0078d7;\">角色特征</b> 的工具面板。<br>点击 <b style=\"color: #0078d7;\">{scan_team}</b> 后点击 <b style=\"color: #0078d7;\">关联或添加</b> 特征, 自动战斗时就会识别对应的角色。<br>如果不想管理 <b style=\"color: #0078d7;\">角色特征</b>, 可以直接使用 <b style=\"color: #0078d7;\">{fixed_team}</b> 功能。</p>"
-msgstr "<p><b style=\"color: #d83b01;\">注意：</b>此面板 <b style=\"color: #d83b01;\">不会</b> 在进入战斗或更换阵容时实时自动刷新或同步显示。<br>这是个用于向数据库关联或添加 <b style=\"color: #0078d7;\">角色特征</b> 的工具面板。<br>点击 <b style=\"color: #0078d7;\">{scan_team}</b> 后点击 <b style=\"color: #0078d7;\">关联或添加</b> 特征, 自动战斗时就会识别对应的角色。<br>如果不想管理 <b style=\"color: #0078d7;\">角色特征</b>, 可以直接使用 <b style=\"color: #0078d7;\">{fixed_team}</b> 功能。</p>"
+msgid ""
+"<p><b style=\"color: #d83b01;\">注意：</b>此面板 <b style=\"color: "
+"#d83b01;\">不会</b> 在进入战斗或更换阵容时实时自动刷新或同步显示。<br>这是个用于向数据库关联或添加 <b "
+"style=\"color: #0078d7;\">角色特征</b> 的工具面板。<br>点击 <b style=\"color: "
+"#0078d7;\">{scan_team}</b> 后点击 <b style=\"color: #0078d7;\">关联或添加</b> 特征, "
+"自动战斗时就会识别对应的角色。<br>如果不想管理 <b style=\"color: #0078d7;\">角色特征</b>, 可以直接使用 <b "
+"style=\"color: #0078d7;\">{fixed_team}</b> 功能。</p>"
+msgstr ""
+"<p><b style=\"color: #d83b01;\">注意：</b>此面板 <b style=\"color: "
+"#d83b01;\">不会</b> 在进入战斗或更换阵容时实时自动刷新或同步显示。<br>这是个用于向数据库关联或添加 <b "
+"style=\"color: #0078d7;\">角色特征</b> 的工具面板。<br>点击 <b style=\"color: "
+"#0078d7;\">{scan_team}</b> 后点击 <b style=\"color: #0078d7;\">关联或添加</b> 特征, "
+"自动战斗时就会识别对应的角色。<br>如果不想管理 <b style=\"color: #0078d7;\">角色特征</b>, 可以直接使用 <b "
+"style=\"color: #0078d7;\">{fixed_team}</b> 功能。</p>"
 
-msgid "<p>用于配置并保存常用的 4 人队伍阵容与出招表, 修改后立即生效。<br>点击 <b style=\"color: #0078d7;\">{apply_preset}</b> 可一键更新应用方案中各角色的出招表 (未选择出招表则保持原配置不变)。<br>开启 <b style=\"color: #0078d7;\">{fixed_preset}</b> 后自动战斗将直接采用此阵容, 无需等待特征识别 (未录入特征的角色亦可直接战斗)。<br>点击 <b style=\"color: #0078d7;\">{fill_scan}</b> 可将上方特征扫描识别出的队伍角色快速填入当前方案。</p>"
-msgstr "<p>用于配置并保存常用的 4 人队伍阵容与出招表, 修改后立即生效。<br>点击 <b style=\"color: #0078d7;\">{apply_preset}</b> 可一键更新应用方案中各角色的出招表 (未选择出招表则保持原配置不变)。<br>开启 <b style=\"color: #0078d7;\">{fixed_preset}</b> 后自动战斗将直接采用此阵容, 无需等待特征识别 (未录入特征的角色亦可直接战斗)。<br>点击 <b style=\"color: #0078d7;\">{fill_scan}</b> 可将上方特征扫描识别出的队伍角色快速填入当前方案。</p>"
+msgid ""
+"<p>用于配置并保存常用的 4 人队伍阵容与出招表, 修改后立即生效。<br>点击 <b style=\"color: "
+"#0078d7;\">{apply_preset}</b> 可一键更新应用方案中各角色的出招表 (未选择出招表则保持原配置不变)。<br>开启 <b "
+"style=\"color: #0078d7;\">{fixed_preset}</b> 后自动战斗将直接采用此阵容, 无需等待特征识别 "
+"(未录入特征的角色亦可直接战斗)。<br>点击 <b style=\"color: #0078d7;\">{fill_scan}</b> "
+"可将上方特征扫描识别出的队伍角色快速填入当前方案。</p>"
+msgstr ""
+"<p>用于配置并保存常用的 4 人队伍阵容与出招表, 修改后立即生效。<br>点击 <b style=\"color: "
+"#0078d7;\">{apply_preset}</b> 可一键更新应用方案中各角色的出招表 (未选择出招表则保持原配置不变)。<br>开启 <b "
+"style=\"color: #0078d7;\">{fixed_preset}</b> 后自动战斗将直接采用此阵容, 无需等待特征识别 "
+"(未录入特征的角色亦可直接战斗)。<br>点击 <b style=\"color: #0078d7;\">{fill_scan}</b> "
+"可将上方特征扫描识别出的队伍角色快速填入当前方案。</p>"
 
 msgid "OpenVINO 单次推理超时，已自动关闭目标检测；重启程序后会重新尝试启用。"
 msgstr ""
@@ -1232,7 +1267,9 @@ msgstr ""
 msgid "批量删除"
 msgstr ""
 
-msgid "当前未绑定任何{combo}.\n遇到此角色将默认使用基础通用脚本(BaseChar)."
+msgid ""
+"当前未绑定任何{combo}.\n"
+"遇到此角色将默认使用基础通用脚本(BaseChar)."
 msgstr ""
 
 msgid "显示内置"
@@ -1271,8 +1308,12 @@ msgstr "外置代码应用失败"
 msgid "已应用外置代码: {}"
 msgstr "已应用外置代码: {}"
 
-msgid "手动添加或修改 Python 代码后, 需点击 [{refresh}] 以生效. 关于编写角色出招表的指南, 请参考 <a href='{doc_url}'>文档</a>."
-msgstr "手动添加或修改 Python 代码后, 需点击 [{refresh}] 以生效. 关于编写角色出招表的指南, 请参考 <a href='{doc_url}'>文档</a>."
+msgid ""
+"手动添加或修改 Python 代码后, 需点击 [{refresh}] 以生效. 关于编写角色出招表的指南, 请参考 <a "
+"href='{doc_url}'>文档</a>."
+msgstr ""
+"手动添加或修改 Python 代码后, 需点击 [{refresh}] 以生效. 关于编写角色出招表的指南, 请参考 <a "
+"href='{doc_url}'>文档</a>."
 
 msgid "角色"
 msgstr "角色"
@@ -1295,7 +1336,19 @@ msgstr ""
 msgid "AI提示模版已复制。请粘贴到AI聊天机器人中。"
 msgstr ""
 
-msgid "{SOURCE}\n\n我想实现: \n\n请修改上面完整的 {class_name} 角色自动化代码。\n\n只返回整个文件完整修改后的 Python 代码，不要返回补丁或解释。\n保持类名为 {class_name}。保留仍然需要的 import。\n\n在思考辅助方法、任务 API、状态、切人、冷却和战斗流程时, 请参考: \nBaseChar 角色基类: {BASE_CHAR_URL}\nCombat Planner 开发指南: {COMBAT_PLANNER_URL}"
+msgid ""
+"{SOURCE}\n"
+"\n"
+"我想实现: \n"
+"\n"
+"请修改上面完整的 {class_name} 角色自动化代码。\n"
+"\n"
+"只返回整个文件完整修改后的 Python 代码，不要返回补丁或解释。\n"
+"保持类名为 {class_name}。保留仍然需要的 import。\n"
+"\n"
+"在思考辅助方法、任务 API、状态、切人、冷却和战斗流程时, 请参考: \n"
+"BaseChar 角色基类: {BASE_CHAR_URL}\n"
+"Combat Planner 开发指南: {COMBAT_PLANNER_URL}"
 msgstr ""
 
 msgid "OK"
@@ -1432,3 +1485,102 @@ msgstr "队伍配置"
 
 msgid "不是该角色?"
 msgstr "不是该角色?"
+
+msgid "日常任务 {}"
+msgstr ""
+
+msgid "方案"
+msgstr ""
+
+msgid "此日常方案在计划任务中显示的名称, 留空则使用默认名称"
+msgstr ""
+
+msgid "日常任务中的任务顺序和启用状态"
+msgstr ""
+
+msgid "自动化"
+msgstr ""
+
+msgid "领取收益"
+msgstr ""
+
+msgid "补货货物"
+msgstr ""
+
+msgid "购买货物送货上门"
+msgstr ""
+
+msgid "优化商品"
+msgstr ""
+
+msgid "补货时长"
+msgstr ""
+
+msgid "商品位数量"
+msgstr ""
+
+msgid "价格表"
+msgstr ""
+
+msgid "领取一咖舍累计收益"
+msgstr ""
+
+msgid "在原料库存界面进行补货"
+msgstr ""
+
+msgid "补货时允许购买货物并送货上门"
+msgstr ""
+
+msgid "根据价格和趋势尝试优化一咖舍商品"
+msgstr ""
+
+msgid "补货时长(auto 表示 24 小时优先, 失败时回退到更短时长)"
+msgstr ""
+
+msgid "商品位数量(auto 由当前已解锁数量决定)"
+msgstr ""
+
+msgid "价格表识别(disabled 跳过商品优化以避免未识别价格的替换)"
+msgstr ""
+
+msgid "24小时"
+msgstr ""
+
+msgid "当前任务"
+msgstr ""
+
+msgid "当前失败任务"
+msgstr ""
+
+msgid "奖励目标"
+msgstr ""
+
+msgid "项目序号"
+msgstr ""
+
+msgid "体力消耗目标"
+msgstr ""
+
+msgid "计划次数"
+msgstr ""
+
+msgid "当前目标"
+msgstr ""
+
+msgid "当前次数"
+msgstr ""
+
+msgid "尝试次数"
+msgstr ""
+
+msgid "成功"
+msgstr ""
+
+msgid "失败"
+msgstr ""
+
+msgid "任务已停止"
+msgstr ""
+
+msgid "第 {} 个项目"
+msgstr ""
