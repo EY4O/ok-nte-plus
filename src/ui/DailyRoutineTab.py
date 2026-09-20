@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (
 )
 from qfluentwidgets import (
     CheckBox,
+    ComboBox,
     ExpandLayout,
     FluentIcon,
     HorizontalSeparator,
@@ -22,6 +23,7 @@ from qfluentwidgets import (
     isDarkTheme,
 )
 
+from src.tasks.daily.DailyRoutineProfiles import DAILY_ROUTINE_PROFILE_CLASSES
 from src.tasks.daily.DailyRoutineTask import (
     DailyRoutineEntry,
     DailyRoutineTask,
@@ -207,7 +209,14 @@ class DailyRoutineTab(CustomTab):
         self.tr_name = self.tr("日常任务")
         self._rendered = False
         self._cards = {}
+        self._profiles = []
+        # Cards are built once per profile and toggled: ExpandLayout.addWidget() appends to a
+        # private list that removeWidget() never clears, so deleting a card leaves the layout
+        # dereferencing a freed C++ object.
+        self._settings_cards = {}
+        self._control_cards = {}
         self._routine_settings_card = None
+        self.routine_separator = None
         self._task_control_card = None
         self._order_changed = False
         self._drag_proxy = None
@@ -216,6 +225,20 @@ class DailyRoutineTab(CustomTab):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
         self.vBoxLayout.setSpacing(0)
+
+        self.profile_bar = QWidget(self.view)
+        self.profile_bar.setObjectName("dailyRoutineProfileBar")
+        profile_layout = QHBoxLayout(self.profile_bar)
+        profile_layout.setContentsMargins(DesignToken.PAGE_MARGIN, 12, DesignToken.PAGE_MARGIN, 0)
+        profile_layout.setSpacing(12)
+        self.profile_label = QLabel(self.tr("方案"), self.profile_bar)
+        self.profile_combo = ComboBox(self.profile_bar)
+        self.profile_combo.setFixedHeight(34)
+        self.profile_combo.setMinimumWidth(200)
+        profile_layout.addWidget(self.profile_label)
+        profile_layout.addWidget(self.profile_combo)
+        profile_layout.addStretch(1)
+        self.vBoxLayout.addWidget(self.profile_bar)
 
         self.routine_settings_view = QWidget(self.view)
         self.routine_settings_view.setObjectName("view")
@@ -255,6 +278,7 @@ class DailyRoutineTab(CustomTab):
 
         self.select_all_check.toggled.connect(self._set_all_selected)
         self.collapse_button.clicked.connect(self._toggle_all_expansion)
+        self.profile_combo.currentIndexChanged.connect(self._select_profile)
 
     @property
     def executor(self):
@@ -263,9 +287,51 @@ class DailyRoutineTab(CustomTab):
     @executor.setter
     def executor(self, value):
         self._executor = value
-        self.task = self.get_task(DailyRoutineTask) if value is not None else None
-        if value is not None and getattr(self, "_rendered", False) is False:
+        if value is None:
+            self._profiles = []
+            self.task = None
+            return
+        # Resolve by exact class name: every profile is a DailyRoutineTask subclass, so an
+        # isinstance lookup would always return the first one.
+        self._profiles = [
+            task
+            for profile_class in DAILY_ROUTINE_PROFILE_CLASSES
+            if (task := value.get_task_by_class_name(profile_class.__name__)) is not None
+        ]
+        self.task = self._profiles[0] if self._profiles else self.get_task(DailyRoutineTask)
+        self._sync_profile_combo()
+        if getattr(self, "_rendered", False) is False:
             self._render_routine()
+
+    def _sync_profile_combo(self):
+        self.profile_combo.blockSignals(True)
+        self.profile_combo.clear()
+        self.profile_combo.addItems([self.tr(task.name) for task in self._profiles])
+        if self.task in self._profiles:
+            self.profile_combo.setCurrentIndex(self._profiles.index(self.task))
+        self.profile_bar.setVisible(len(self._profiles) > 1)
+        self.profile_combo.blockSignals(False)
+
+    def _refresh_profile_names(self):
+        """Reflect a renamed profile in the dropdown without rebuilding it."""
+        for index, task in enumerate(self._profiles):
+            if index < self.profile_combo.count():
+                self.profile_combo.setItemText(index, self.tr(task.name))
+
+    def _watch_profile_name(self, card):
+        """Update the dropdown live while the Profile Name field is edited."""
+        widget = card.config_widget_by_key.get(DailyRoutineTask.CONF_PROFILE_NAME)
+        line_edit = getattr(widget, "line_edit", None)
+        if line_edit is not None:
+            line_edit.textChanged.connect(lambda _text: self._refresh_profile_names())
+
+    def _select_profile(self, index):
+        if index < 0 or index >= len(self._profiles):
+            return
+        if self.task is self._profiles[index]:
+            return
+        self.task = self._profiles[index]
+        self._render_routine()
 
     @property
     def name(self):  # type: ignore
@@ -281,17 +347,30 @@ class DailyRoutineTab(CustomTab):
         return routine_task.daily_task_card_context(task_id, task)
 
     def _install_routine_settings(self, routine_task):
-        if self._routine_settings_card is None:
-            self._routine_settings_card = TaskCard(routine_task, True)
-            self._routine_settings_card.button_container.hide()
-            if self._routine_settings_card.reset_config is not None:
-                self._routine_settings_card.reset_config.clicked.connect(self._render_routine)
-            self._routine_settings_card.setParent(self.routine_settings_view)
-            self.routine_settings_layout.addWidget(self._routine_settings_card)
-            self._routine_settings_card.show()
+        key = type(routine_task).__name__
+        entry = self._settings_cards.get(key)
+        if entry is None:
+            card = TaskCard(routine_task, True)
+            card.button_container.hide()
+            if card.reset_config is not None:
+                card.reset_config.clicked.connect(self._render_routine)
+            card.setParent(self.routine_settings_view)
+            self.routine_settings_layout.addWidget(card)
+            # Each profile carries its own separator so the visible pair always stays in
+            # order; ExpandLayout appends and cannot insert.
+            separator = HorizontalSeparator(self.view)
+            self.routine_settings_layout.addWidget(separator)
+            entry = (card, separator)
+            self._settings_cards[key] = entry
+            self._watch_profile_name(card)
 
-            self.routine_separator = HorizontalSeparator(self.view)
-            self.routine_settings_layout.addWidget(self.routine_separator)
+        for other_key, (card, separator) in self._settings_cards.items():
+            visible = other_key == key
+            card.setVisible(visible)
+            separator.setVisible(visible)
+
+        self._routine_settings_card, self.routine_separator = entry
+        self.routine_settings_layout.invalidate()
 
     def _render_routine(self):
         routine_task = self._routine_task()
@@ -318,6 +397,7 @@ class DailyRoutineTab(CustomTab):
         self.routine_layout.invalidate()
         self.routine_layout.activate()
         self._rendered = True
+        self._sync_profile_combo()
         self._sync_selection_controls()
         self._sync_expansion_control()
 
@@ -462,11 +542,17 @@ class DailyRoutineTab(CustomTab):
         )
 
     def _install_task_controls(self, routine_task):
-        if self._task_control_card is not None:
-            return
-        self._task_control_card = TaskCard(routine_task, True)
-        self._task_control_card.hide()
-        controls = self._task_control_card.button_container
-        controls.setParent(self.action_bar)
-        self.action_layout.addWidget(controls)
-        controls.show()
+        key = type(routine_task).__name__
+        card = self._control_cards.get(key)
+        if card is None:
+            card = TaskCard(routine_task, True)
+            card.hide()
+            controls = card.button_container
+            controls.setParent(self.action_bar)
+            self.action_layout.addWidget(controls)
+            self._control_cards[key] = card
+
+        for other_key, other in self._control_cards.items():
+            other.button_container.setVisible(other_key == key)
+
+        self._task_control_card = card

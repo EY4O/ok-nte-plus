@@ -29,7 +29,9 @@ def install_startup_patches(config):
 
     install_i18n_patch()
     if ui_mode == "qt":
+        from src.patches.schedule_weekday_patch import install_schedule_weekday_patch
         from src.patches.task_tab_patch import install_task_tab_patch
 
         install_task_tab_patch()
+        install_schedule_weekday_patch()
     _PATCH_INSTALLED = True
