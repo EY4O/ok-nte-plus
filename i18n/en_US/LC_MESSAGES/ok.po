@@ -1682,3 +1682,35 @@ msgstr ""
 
 msgid "识别行数"
 msgstr "Lines Recognised"
+
+msgid "追踪最高报酬"
+msgstr "Track Highest Reward"
+
+msgid "哈索尔直接完成"
+msgstr "Complete with Hathor"
+
+msgid "扫描后自动追踪报酬最高的配送任务"
+msgstr "Track the highest-paying delivery after scanning"
+
+msgid "站在配送 NPC 面前时, 用哈索尔的每日一次直接完成配送; 找不到哈索尔选项时会退出对话, 不会接取委托"
+msgstr ""
+"While standing at the delivery NPC, use Hathor's once-a-day auto delivery. "
+"If the Hathor option is missing the dialogue is closed; no order is ever "
+"accepted"
+
+msgid "扫描城市配送任务, 可追踪报酬最高的一单, 并用哈索尔直接完成"
+msgstr ""
+"Scan City Delivery jobs, optionally track the highest-paying one, and "
+"complete it with Hathor"
+
+msgid "等待抵达秒数"
+msgstr "Arrival Wait (seconds)"
+
+msgid "等待你走到配送 NPC 面前的秒数, 超时则放弃"
+msgstr "How long to wait for you to reach the delivery NPC before giving up"
+
+msgid "用哈索尔的每日一次直接完成配送; 会等待你走到配送 NPC 面前, 找不到哈索尔选项时会退出对话, 不会接取委托"
+msgstr ""
+"Use Hathor's once-a-day auto delivery. Waits for you to reach the delivery "
+"NPC. If the Hathor option is missing the dialogue is closed; no order is "
+"ever accepted"

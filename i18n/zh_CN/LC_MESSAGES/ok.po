@@ -1593,3 +1593,27 @@ msgstr ""
 
 msgid "识别行数"
 msgstr ""
+
+msgid "追踪最高报酬"
+msgstr ""
+
+msgid "哈索尔直接完成"
+msgstr ""
+
+msgid "扫描后自动追踪报酬最高的配送任务"
+msgstr ""
+
+msgid "站在配送 NPC 面前时, 用哈索尔的每日一次直接完成配送; 找不到哈索尔选项时会退出对话, 不会接取委托"
+msgstr ""
+
+msgid "扫描城市配送任务, 可追踪报酬最高的一单, 并用哈索尔直接完成"
+msgstr ""
+
+msgid "等待抵达秒数"
+msgstr ""
+
+msgid "等待你走到配送 NPC 面前的秒数, 超时则放弃"
+msgstr ""
+
+msgid "用哈索尔的每日一次直接完成配送; 会等待你走到配送 NPC 面前, 找不到哈索尔选项时会退出对话, 不会接取委托"
+msgstr ""

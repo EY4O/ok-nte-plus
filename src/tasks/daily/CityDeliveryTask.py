@@ -61,13 +61,49 @@ class CityDeliveryTask(NTEOneTimeTask, BaseNTETask):
     # so keep the band between those.
     REWARD_BAND_HEIGHT = 0.12
 
+    # Dialogue options stack on the right once the courier is engaged.
+    DIALOG_OPTION_BOX = (0.62, 0.54, 1.0, 0.82)
+    # "Delivery completed with Hathor's help" - stable across couriers.
+    HATHOR_OPTION_MATCH = re.compile(r"Hathor|哈索尔")
+    # Never to be clicked by this task: it starts a real timed delivery and spends stamina.
+    ACCEPT_ORDER_MATCH = re.compile(r"Accept\s*Order|接受委托")
+    TRACK_MATCH = re.compile(r"^Track$|追踪")
+    # Reward screen shown after a successful hand-in.
+    REWARD_SCREEN_BOX = (0.33, 0.08, 0.72, 0.92)
+    # Prefix match: the stamina badge can be merged into the button text as "Complete X96".
+    COMPLETE_MATCH = re.compile(r"^Complete|^完成")
+    # Sits immediately left of Complete and starts another delivery; never click it.
+    AGAIN_MATCH = re.compile(r"Again|再来|再次")
+
     MAP_TIMEOUT = 15
     PANEL_TIMEOUT = 10
+    DIALOG_TIMEOUT = 8
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.name = "城市配送"
-        self.description = "扫描城市配送任务列表并按报酬排序, 只读取不接取"
+        self.description = "扫描城市配送任务, 可追踪报酬最高的一单, 并用哈索尔直接完成"
+        self.default_config.update(
+            {
+                self.CONF_TRACK_BEST: False,
+                self.CONF_HATHOR_TURN_IN: False,
+                self.CONF_ARRIVAL_WAIT: 120,
+            }
+        )
+        self.config_description.update(
+            {
+                self.CONF_TRACK_BEST: "扫描后自动追踪报酬最高的配送任务",
+                self.CONF_HATHOR_TURN_IN: (
+                    "用哈索尔的每日一次直接完成配送; 会等待你走到配送 NPC 面前, "
+                    "找不到哈索尔选项时会退出对话, 不会接取委托"
+                ),
+                self.CONF_ARRIVAL_WAIT: "等待你走到配送 NPC 面前的秒数, 超时则放弃",
+            }
+        )
+
+    CONF_TRACK_BEST = "追踪最高报酬"
+    CONF_HATHOR_TURN_IN = "哈索尔直接完成"
+    CONF_ARRIVAL_WAIT = "等待抵达秒数"
 
     def run(self):
         super().run()
@@ -75,6 +111,14 @@ class CityDeliveryTask(NTEOneTimeTask, BaseNTETask):
 
     def do_run(self) -> bool:
         self.ensure_main()
+
+        if self.config.get(self.CONF_HATHOR_TURN_IN):
+            # Turning in happens where the player already stands, so it must run before the
+            # map is opened. With both options enabled this run only hands in; tracking a
+            # new job needs a separate run from the open world.
+            self.log_info("哈索尔直接完成已开启: 本次只在当前位置交付, 不扫描列表")
+            return self._hathor_turn_in()
+
         if not self._open_delivery_list():
             return False
 
@@ -84,9 +128,130 @@ class CityDeliveryTask(NTEOneTimeTask, BaseNTETask):
             self.log_error("未能在列表中识别出任务行")
             return False
 
-        self._report_results(results)
+        best = self._report_results(results)
         self.screenshot("city_delivery_scan_done")
+
+        if best is not None and self.config.get(self.CONF_TRACK_BEST):
+            return self._track_job(best)
         return True
+
+    def _track_job(self, best: dict) -> bool:
+        """Re-select the winning job and press Track so it appears on the compass."""
+        self._scroll_list(self.SCROLL_TO_TOP_STEPS)
+        rows = self._row_boxes()
+        titles = [self._row_title(row) for row in rows]
+        if best["title"] not in titles:
+            self._scroll_list(-self.SCROLL_PAGE_STEPS)
+            rows = self._row_boxes()
+            titles = [self._row_title(row) for row in rows]
+        if best["title"] not in titles:
+            self.log_error(f"追踪失败: 重新定位不到 {best['title']}")
+            return False
+
+        row = rows[titles.index(best["title"])]
+        self.log_info(f"重新选择 {best['title']} 准备追踪")
+        self.click_box(row[0])
+        self.sleep(1.0)
+
+        if not self._click_text(self.JOB_DETAIL_BOX, self.TRACK_MATCH, "Track"):
+            self.screenshot("city_delivery_no_track")
+            self.log_error("未找到 Track 按钮")
+            return False
+
+        self.log_info(f"已追踪 {best['title']} ({best['reward']})", notify=True)
+        return True
+
+    def _hathor_turn_in(self) -> bool:
+        """Use Hathor's once-a-day auto delivery at the courier standing in front of us.
+
+        Only ever clicks the option naming Hathor. If that option is absent, most likely
+        because the daily use is spent, the dialogue is closed rather than risk accepting
+        a real order, which would cost City Stamina and start a timed run.
+        """
+        wait_seconds = self.config.get(self.CONF_ARRIVAL_WAIT) or 0
+        if not self.find_interac():
+            if wait_seconds <= 0:
+                self.screenshot("city_delivery_no_npc")
+                self.log_error("附近没有可交互的 NPC, 请先走到配送 NPC 面前")
+                return False
+            self.log_info(f"等待你走到配送 NPC 面前, 最多 {wait_seconds} 秒", notify=True)
+            if not self.wait_until(self.find_interac, time_out=wait_seconds):
+                self.screenshot("city_delivery_no_npc")
+                self.log_error(f"等待 {wait_seconds} 秒内没有出现可交互的 NPC")
+                return False
+
+        self.send_key("f", after_sleep=1.5)
+        options = self.wait_until(
+            lambda: self.ocr(*self.DIALOG_OPTION_BOX, name="dialog_options"),
+            time_out=self.DIALOG_TIMEOUT,
+        )
+        if not options:
+            self.screenshot("city_delivery_no_dialog")
+            self.log_error("未能读取对话选项")
+            return False
+
+        for box in options:
+            self.log_info(f"[dialog] {box.name} @ y={box.y}")
+
+        hathor = next((b for b in options if self.HATHOR_OPTION_MATCH.search(b.name or "")), None)
+        if hathor is None:
+            self.screenshot("city_delivery_no_hathor_option")
+            self.log_warning("没有哈索尔选项, 可能今日已用过; 退出对话, 不接取委托")
+            self.send_key("esc", after_sleep=1.0)
+            self.ensure_main()
+            return False
+
+        if self.ACCEPT_ORDER_MATCH.search(hathor.name or ""):
+            self.log_error(f"安全检查失败: 匹配到的选项像是接单 - {hathor.name}")
+            self.send_key("esc", after_sleep=1.0)
+            return False
+
+        self.log_info(f"选择: {hathor.name}", notify=True)
+        self.click_box(hathor)
+        self.sleep(2.5)
+        self.screenshot("city_delivery_hathor_done")
+        self._close_reward_screen()
+        self.ensure_main()
+        return True
+
+    def _close_reward_screen(self) -> None:
+        """Dismiss the reward card with Complete.
+
+        Esc does not close it, and "Again!" sits immediately to the left of "Complete",
+        so the button is matched by text and never by position.
+        """
+        boxes = self.wait_until(
+            lambda: self.ocr(*self.REWARD_SCREEN_BOX, name="reward_screen"),
+            time_out=self.DIALOG_TIMEOUT,
+        )
+        if not boxes:
+            self.log_info("未出现结算界面, 跳过关闭")
+            return
+
+        for box in boxes:
+            self.log_info(f"[reward] {box.name} @ y={box.y}")
+        earned = max(
+            (
+                int(re.sub(r"[^0-9]", "", raw))
+                for box in boxes
+                for raw in self.DIGITS_MATCH.findall(box.name or "")
+                if re.sub(r"[^0-9]", "", raw)
+            ),
+            default=None,
+        )
+        if earned is not None:
+            self.log_info(f"本次配送获得: {earned}", notify=True)
+            self.info_set("本次获得", earned)
+
+        complete = next(
+            (b for b in boxes if self.COMPLETE_MATCH.search((b.name or "").strip())), None
+        )
+        if complete is None or self.AGAIN_MATCH.search(complete.name or ""):
+            self.log_warning("未找到 Complete 按钮, 请手动关闭结算界面")
+            return
+        self.log_info(f"点击 {complete.name} 关闭结算界面")
+        self.click_box(complete)
+        self.sleep(1.5)
 
     def _open_delivery_list(self) -> bool:
         if not self.wait_until(
@@ -257,7 +422,7 @@ class CityDeliveryTask(NTEOneTimeTask, BaseNTETask):
         ]
         return same_line[0].name if same_line else None
 
-    def _report_results(self, results: list) -> None:
+    def _report_results(self, results: list):
         for item in results:
             self.log_info(
                 f"  #{item['index']} {item['title']} -> {item['reward']} "
@@ -266,11 +431,12 @@ class CityDeliveryTask(NTEOneTimeTask, BaseNTETask):
         scored = [item for item in results if item["reward"] is not None]
         if not scored:
             self.log_error("未能读取到任何报酬数字, 请反馈 job_detail 日志")
-            return
+            return None
         best = max(scored, key=lambda item: item["reward"])
         self.log_info(f"报酬最高: #{best['index']} {best['title']} = {best['reward']}", notify=True)
         self.info_set("最高报酬任务", best["title"])
         self.info_set("最高报酬", best["reward"])
+        return best
 
     def _click_text(self, region: tuple, match, description: str) -> bool:
         found = self.wait_until(

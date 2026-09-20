@@ -33,6 +33,42 @@ English | [简体中文](README_cn.md)
 
 Changes in this fork that are not in upstream [BnanZ0/ok-nte](https://github.com/BnanZ0/ok-nte). Newest first.
 
+### City Delivery with Hathor
+
+Finds the highest-paying daily delivery and hands it in using Hathor's once-a-day auto
+delivery, so the job is completed without driving the minigame.
+
+Daily deliveries vary a lot in value. A recent day ranged from 8,000 to 32,000 Fons, and the
+biggest payout was a plain "Shop Restock" rather than the one labelled Urgent, so the reward
+is read from each job rather than guessed from its cargo type. Ranking uses the
+`Professional Rating: (90+)` tier, because Hathor always claims at the top tier.
+
+Hathor only needs to be owned; she does not have to be in your active party.
+
+**How to use it**
+
+1. From the open world, run **City Delivery** with **Track Highest Reward** enabled. It opens
+   the map, reads every daily delivery, ranks them, and tracks the best one. The job then
+   appears on your compass and minimap.
+2. Fast travel to a nearby point and make your way to the delivery NPC yourself.
+3. Run the task again with **Complete with Hathor** enabled, or let it run as the last step of
+   your daily routine. It waits up to **Arrival Wait (seconds)** for you to reach the NPC,
+   then completes the delivery and closes the reward screen.
+
+Both options are off by default. The task also appears at the end of the **Daily Tasks** list,
+disabled, so you can opt in per profile; it is placed last because it is the only routine task
+that waits on you.
+
+**Safety**
+
+The dialogue also offers **Accept Order**, which would start a real timed delivery and spend
+City Stamina. The task only ever clicks the option whose text names Hathor, never a position
+or the highlighted default. If that option is missing, usually because the daily use is
+already spent, it closes the dialogue and stops rather than choosing something else. The
+reward screen is dismissed with **Complete**, matched by text, never the adjacent **Again!**.
+
+Travel is still manual. Automating it needs a detection template for the delivery marker.
+
 ### Daily Routine Profiles and per-weekday scheduling
 
 Run a different set of daily tasks on each day of the week.
