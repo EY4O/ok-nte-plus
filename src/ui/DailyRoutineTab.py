@@ -357,8 +357,10 @@ class DailyRoutineTab(CustomTab):
             card.setParent(self.routine_settings_view)
             self.routine_settings_layout.addWidget(card)
             # Each profile carries its own separator so the visible pair always stays in
-            # order; ExpandLayout appends and cannot insert.
-            separator = HorizontalSeparator(self.view)
+            # order; ExpandLayout appends and cannot insert. Parent it to the same widget as
+            # the card: routine_settings_layout positions in routine_settings_view's
+            # coordinates, so a separator parented elsewhere paints at the wrong offset.
+            separator = HorizontalSeparator(self.routine_settings_view)
             self.routine_settings_layout.addWidget(separator)
             entry = (card, separator)
             self._settings_cards[key] = entry
