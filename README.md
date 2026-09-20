@@ -3,7 +3,7 @@
   <h1>ok-nte</h1>
   <p>An image-recognition-based automation tool for <em>Neverness To Everness</em>, with background operation support, developed based on the <a href="https://github.com/ok-oldking/ok-script">ok-script</a> framework.</p>
 
-English | [简体中文](README.md)
+English | [简体中文](README_cn.md)
 
   <p>
     <img src="https://img.shields.io/badge/platform-Windows-blue" alt="Platform">

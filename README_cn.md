@@ -3,7 +3,7 @@
   <h1>ok-nte</h1>
   <p>一款基于图像识别的《异环》自动化工具，支持后台运行，基于 <a href="https://github.com/ok-oldking/ok-script">ok-script</a> 框架开发。</p>
 
-[Chinese](README_cn.md) | 简体中文
+[English](README.md) | 简体中文
 
   <p>
     <img src="https://img.shields.io/badge/platform-Windows-blue" alt="平台">
