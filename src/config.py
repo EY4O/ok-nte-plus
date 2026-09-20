@@ -218,6 +218,7 @@ config = {
         ["src.tasks.daily.DailyClaimTask", "DailyClaimTask"],
         ["src.tasks.daily.GiftTask", "GiftTask"],
         ["src.tasks.daily.CoffeeTask", "CoffeeTask"],
+        ["src.tasks.daily.CityDeliveryTask", "CityDeliveryTask"],
         ["src.tasks.daily.FountainTask", "FountainTask"],
         ["src.tasks.daily.FurnitureTask", "FurnitureTask"],
         ["src.tasks.daily.CinemaDateTask", "CinemaDateTask"],

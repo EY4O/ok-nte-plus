@@ -1584,3 +1584,12 @@ msgstr ""
 
 msgid "第 {} 个项目"
 msgstr ""
+
+msgid "城市配送"
+msgstr ""
+
+msgid "扫描城市配送任务列表并记录识别结果, 不选择也不移动"
+msgstr ""
+
+msgid "识别行数"
+msgstr ""

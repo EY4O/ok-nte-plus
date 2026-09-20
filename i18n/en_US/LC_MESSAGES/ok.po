@@ -1671,3 +1671,14 @@ msgstr "Task stopped"
 
 msgid "第 {} 个项目"
 msgstr "Stage {}"
+
+msgid "城市配送"
+msgstr "City Delivery"
+
+msgid "扫描城市配送任务列表并记录识别结果, 不选择也不移动"
+msgstr ""
+"Scan the City Delivery job list and log what was recognised; selects nothing"
+" and does not travel"
+
+msgid "识别行数"
+msgstr "Lines Recognised"
