@@ -1714,3 +1714,28 @@ msgstr ""
 "Use Hathor's once-a-day auto delivery. Waits for you to reach the delivery "
 "NPC. If the Hathor option is missing the dialogue is closed; no order is "
 "ever accepted"
+
+msgid "异象材料扫描"
+msgstr "Anomaly Material Scan"
+
+msgid "读取异象界域各页签的项目名称, 建立序号与材料名的对应, 不消耗体力"
+msgstr ""
+"Read the item names on each Anomaly Zone tab to map list index to material "
+"name. Costs no stamina"
+
+msgid "已扫描页签"
+msgstr "Tabs Scanned"
+
+msgid "角色突破扫描"
+msgstr "Character Ascend Scan"
+
+msgid "读取当前角色的突破材料需求, 只读取不消耗材料"
+msgstr ""
+"Read the current character's ascension material requirements. Read-only; "
+"consumes no materials"
+
+msgid "当前角色"
+msgstr "Current Character"
+
+msgid "材料组数"
+msgstr "Material Entries"

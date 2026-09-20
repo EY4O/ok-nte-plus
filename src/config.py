@@ -211,6 +211,8 @@ config = {
         ["src.tasks.AutoBidAuctionTask", "AutoBidAuctionTask"],
         ["src.tasks.VolleyballTask", "VolleyballTask"],
         # 测试相关
+        ["src.tasks.AnomalyMaterialScanTask", "AnomalyMaterialScanTask"],
+        ["src.tasks.CharacterAscendScanTask", "CharacterAscendScanTask"],
         ["src.tasks.CombatDetectionTestTask", "CombatDetectionTestTask"],
         ["src.tasks.DebugCharTask", "DebugCharTask"],
         ["ok", "DiagnosisTask"],

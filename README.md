@@ -33,6 +33,34 @@ English | [简体中文](README_cn.md)
 
 Changes in this fork that are not in upstream [BnanZ0/ok-nte](https://github.com/BnanZ0/ok-nte). Newest first.
 
+### Character Builder groundwork (scanners)
+
+Two read-only scan tasks that read progression data out of the game. They are the data
+layer for a planned Character Builder tab; that tab does not exist yet, so for now they
+report to the log and to `configs/`.
+
+**Character Ascend Scan** reads the ascension requirements for the character currently
+open in the `C` menu: the target level, the stat gains, and each required material with
+its owned/needed counts. It then opens each material to read its name and its in-game
+**Source**, for example `Anomaly Hunt "Serenetti"`. That gives the full chain of
+character to material to the activity that drops it, without relying on external guides.
+
+**Anomaly Material Scan** reads the four Anomaly Zone tabs on the `F1` page and records
+the domains each one offers, so a material's source can later be resolved to a task
+configuration.
+
+**How to use them**
+
+1. From the open world, select the character you want to read in the `C` menu.
+2. Run **Character Ascend Scan**. Results appear in the log.
+3. Run **Anomaly Material Scan** from the open world. It writes
+   `configs/AnomalyMaterialMap.json`.
+
+Both are strictly read-only. Neither spends City Stamina, materials or currency. The
+Ascend screen carries a confirm button and a Material Conversion button that would spend
+resources; the scanner derives its click points from each material's own count box, so a
+click can only land on the icon row, and tests assert it stays clear of both controls.
+
 ### City Delivery with Hathor
 
 Finds the highest-paying daily delivery and hands it in using Hathor's once-a-day auto

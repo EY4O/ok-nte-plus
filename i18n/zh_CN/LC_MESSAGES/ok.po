@@ -1617,3 +1617,24 @@ msgstr ""
 
 msgid "用哈索尔的每日一次直接完成配送; 会等待你走到配送 NPC 面前, 找不到哈索尔选项时会退出对话, 不会接取委托"
 msgstr ""
+
+msgid "异象材料扫描"
+msgstr ""
+
+msgid "读取异象界域各页签的项目名称, 建立序号与材料名的对应, 不消耗体力"
+msgstr ""
+
+msgid "已扫描页签"
+msgstr ""
+
+msgid "角色突破扫描"
+msgstr ""
+
+msgid "读取当前角色的突破材料需求, 只读取不消耗材料"
+msgstr ""
+
+msgid "当前角色"
+msgstr ""
+
+msgid "材料组数"
+msgstr ""

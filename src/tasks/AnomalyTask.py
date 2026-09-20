@@ -37,6 +37,15 @@ class AnomalyTask(NTEOneTimeTask, BaseCombatTask):
     EXP_COIN = "甲硬币"
 
     # --- 任务配置结构 ---
+    # Task type tabs sit in one row on the F1 domain page.
+    TASK_TYPE_TAB_Y = 0.1528
+    TASK_TYPE_TAB_X = {
+        TASK_EXP_COIN: 0.1703,
+        TASK_ABILITY: 0.2977,
+        TASK_ARC: 0.4211,
+        TASK_CONSOLE: 0.5422,
+    }
+
     TASK_SUB_CONFIGS = {
         TASK_EXP_COIN: CONF_EXP_TARGET,
         TASK_ABILITY: CONF_ABILITY_ID,
@@ -198,14 +207,7 @@ class AnomalyTask(NTEOneTimeTask, BaseCombatTask):
 
         # 不同操作 1: 选择任务类型
         self.log_info(f"切换至任务页签: {task_type}")
-        if task_type == self.TASK_EXP_COIN:
-            self.operate_click(0.1703, 0.1528)
-        elif task_type == self.TASK_ABILITY:
-            self.operate_click(0.2977, 0.1528)
-        elif task_type == self.TASK_ARC:
-            self.operate_click(0.4211, 0.1528)
-        elif task_type == self.TASK_CONSOLE:
-            self.operate_click(0.5422, 0.1528)
+        self.click_task_type_tab(task_type)
 
         self.sleep(0.5)
 
@@ -312,6 +314,15 @@ class AnomalyTask(NTEOneTimeTask, BaseCombatTask):
             box = min(claims, key=lambda x: x.x)
         btn = box.copy(x_offset=box.width * 3)
         self.operate_click(btn)
+        return True
+
+    def click_task_type_tab(self, task_type: str) -> bool:
+        """Select a task type tab on the F1 domain page."""
+        x = self.TASK_TYPE_TAB_X.get(task_type)
+        if x is None:
+            self.log_error(f"未知任务类型: {task_type}")
+            return False
+        self.operate_click(x, self.TASK_TYPE_TAB_Y)
         return True
 
     def click_sub_idx(self, idx):
