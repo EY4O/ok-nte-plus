@@ -132,7 +132,22 @@ class _DailyTaskConfig(dict):
 
 class DailyRoutineTask(NTEOneTimeTask, BaseNTETask):
     CONF_ITEMS = "Routine Items"
+    CONF_PROFILE_NAME = "Profile Name"
+    PROFILE_NAME_DESCRIPTION = "此日常方案在计划任务中显示的名称, 留空则使用默认名称"
     TASK_CONFIGS_FILE_NAME = "DailyRoutineTaskConfigs"
+
+    @property
+    def name(self):
+        config = getattr(self, "config", None)
+        if config is not None:
+            custom = str(config.get(self.CONF_PROFILE_NAME) or "").strip()
+            if custom:
+                return custom
+        return self._default_name
+
+    @name.setter
+    def name(self, value):
+        self._default_name = value
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -147,6 +162,8 @@ class DailyRoutineTask(NTEOneTimeTask, BaseNTETask):
         self.default_config[self.CONF_ITEMS] = self.default_items()
         self.config_description[self.CONF_ITEMS] = "日常任务中的任务顺序和启用状态"
         self.config_type[self.CONF_ITEMS] = {"hidden": True}
+        self.default_config[self.CONF_PROFILE_NAME] = ""
+        self.config_description[self.CONF_PROFILE_NAME] = self.PROFILE_NAME_DESCRIPTION
         self.add_exit_after_config()
 
     @staticmethod

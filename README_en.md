@@ -29,6 +29,30 @@ English | [简体中文](README.md)
   <img width="950" alt="ok-nte-gif-en" src="./assets/gif/ok-nte-gif-en.gif" />
 </p>
 
+## 🔧 Fork Additions
+
+Changes in this fork that are not in upstream [BnanZ0/ok-nte](https://github.com/BnanZ0/ok-nte). Newest first.
+
+### Daily Routine Profiles and per-weekday scheduling
+
+Run a different set of daily tasks on each day of the week.
+
+Previously a schedule entry ran one task, and Daily Tasks stored a single selection, so every scheduled run did the same thing. There are now **7 routine profiles**, each with its own task selection and ordering. Profile 1 is the original Daily Tasks, so existing configs keep working.
+
+Sub-task settings (Cafe, Anomaly, and so on) remain **shared** across profiles — configure them once. Only the selection and ordering are per-profile.
+
+**How to use it**
+
+1. Open the **Daily Tasks** tab. Pick a profile from the **Profile** dropdown at the top.
+2. Enable the tasks you want for that profile and drag them into the order you want.
+3. Optionally rename the profile using the **Profile Name** field in the settings card at the top — call it `Monday`, `Tuesday`, and so on. The name updates in the dropdown as you type, and is what the Schedule tab shows.
+4. Repeat for each profile you need.
+5. Open the **Schedule** tab and click **Create**. Your profiles appear in **Select Task** under their names.
+6. Set **Trigger Type** to `Weekly`, then pick a **Day of Week** and a start time.
+7. Create one entry per weekday, each pointing at its own profile.
+
+Weekly schedule entries previously always fired on Monday regardless of when they were created; the **Day of Week** control fixes that and applies to both new and existing entries.
+
 ## What is ok-nte?
 
 ok-nte is a Windows automation tool for <em>Neverness To Everness</em>. It interacts through screen recognition, OCR, system audio feedback, and ordinary keyboard and mouse input; it does not read game memory or modify game files.

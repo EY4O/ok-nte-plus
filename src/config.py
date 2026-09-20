@@ -193,6 +193,12 @@ config = {
     "onetime_tasks": [  # 用户点击触发的任务
         ["src.tasks.LauncherTask", "LauncherTask"],
         ["src.tasks.daily.DailyRoutineTask", "DailyRoutineTask"],
+        ["src.tasks.daily.DailyRoutineProfiles", "DailyRoutineProfile2"],
+        ["src.tasks.daily.DailyRoutineProfiles", "DailyRoutineProfile3"],
+        ["src.tasks.daily.DailyRoutineProfiles", "DailyRoutineProfile4"],
+        ["src.tasks.daily.DailyRoutineProfiles", "DailyRoutineProfile5"],
+        ["src.tasks.daily.DailyRoutineProfiles", "DailyRoutineProfile6"],
+        ["src.tasks.daily.DailyRoutineProfiles", "DailyRoutineProfile7"],
         ["src.tasks.FishingTask", "FishingTask"],
         ["src.tasks.AnomalyTask", "AnomalyTask"],
         ["src.tasks.AnomalyHunter", "AnomalyHunter"],

@@ -69,6 +69,7 @@ class AnomalyTask(NTEOneTimeTask, BaseCombatTask):
     # --- 字串格式 ---
     CYCLE_CUSTOM_OPTION_FMT = "{task}: {id}"
     DESC_ID_RANGE_FMT = "选择列表中的第几个项目 ({}-{})"
+    SUB_IDX_FMT = "第 {} 个项目"
 
     # --- 自定义循环选项 ---
     NUMERIC_ID_TASK_TYPES = [TASK_ABILITY, TASK_ARC, TASK_CONSOLE]
@@ -184,7 +185,7 @@ class AnomalyTask(NTEOneTimeTask, BaseCombatTask):
         if task_type == self.TASK_EXP_COIN:
             self.info_set("奖励目标", config.get(self.CONF_EXP_TARGET))
         else:
-            self.info_set("项目序号", f"第 {idx + 1} 个项目")
+            self.info_set("项目序号", self.SUB_IDX_FMT.format(idx + 1))
 
         self.log_info(f"开始任务: {task_type}, 目标索引: {idx + 1}")
 
@@ -436,6 +437,9 @@ class AnomalyTask(NTEOneTimeTask, BaseCombatTask):
 
 register_i18n_format(
     AnomalyTask.DESC_ID_RANGE_FMT,
+)
+register_i18n_format(
+    AnomalyTask.SUB_IDX_FMT,
 )
 register_i18n_format(
     AnomalyTask.CYCLE_CUSTOM_OPTION_FMT,
