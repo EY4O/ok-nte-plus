@@ -123,5 +123,67 @@ class TestAscendPopupParsing(unittest.TestCase):
         self.assertNotIn("Substance left by Anomalies after", sources)
 
 
+
+class TestRosterGrid(unittest.TestCase):
+    """Level badges are the grid's text anchors; clicks derive from them."""
+
+    W, H = 1920, 1080
+
+    def test_level_badges_are_recognised(self):
+        # Includes a stray trailing glyph, as OCR can read the adjacent element icon.
+        for text in ("Lvl 50", "LvL 20", "Lvl 1", "Lv 70", "Lvl.40", "Lvl 50 6", "LvL50"):
+            with self.subTest(text=text):
+                self.assertTrue(CharacterAscendScanTask.LEVEL_BADGE_MATCH.search(text))
+
+    def test_other_grid_text_is_not_a_badge(self):
+        for text in ("List", "Level", "Refia", "Lvl: 70/70"):
+            with self.subTest(text=text):
+                self.assertIsNone(CharacterAscendScanTask.LEVEL_BADGE_MATCH.search(text))
+
+    def test_click_lands_on_the_portrait_inside_the_grid_panel(self):
+        # "Lvl 50" badge of the first full row, measured from a capture.
+        badge = _Box(x=100, y=242, width=56, height=26, name="Lvl 50")
+        x, y = CharacterAscendScanTask.badge_click_point(badge, self.W, self.H)
+        left, top, right, bottom = CharacterAscendScanTask.GRID_PANEL_BOX
+        self.assertTrue(left < x < right)
+        self.assertTrue(top < y < bottom)
+        self.assertLess(y * self.H, badge.y, "click should sit above the badge, on the portrait")
+
+
+    def test_partial_last_row_click_sits_on_the_visible_sliver(self):
+        # At the end of the list the clipped row shows only y~745-815 above the panel edge.
+        y = CharacterAscendScanTask.GRID_PARTIAL_ROW_Y * self.H
+        self.assertTrue(745 < y < 815, f"click at y={y:.0f} misses the visible sliver")
+        left, top, right, bottom = CharacterAscendScanTask.GRID_PANEL_BOX
+        self.assertTrue(top < CharacterAscendScanTask.GRID_PARTIAL_ROW_Y < bottom)
+
+    def test_columns_come_from_the_badges(self):
+        # Three badges per row at x~127/307/487, across two rows.
+        badges = [
+            _Box(x=100, y=660, width=56, height=26, name="Lvl 1"),
+            _Box(x=280, y=660, width=56, height=26, name="Lvl 1"),
+            _Box(x=460, y=660, width=56, height=26, name="Lvl 1"),
+            _Box(x=100, y=465, width=56, height=26, name="Lvl 30"),
+            _Box(x=281, y=465, width=56, height=26, name="Lvl 20"),
+        ]
+        columns = CharacterAscendScanTask.grid_columns(badges, self.W, self.H)
+        self.assertEqual(len(columns), 3)
+        self.assertEqual(columns, sorted(columns))
+
+    def test_jitter_within_a_column_does_not_split_it(self):
+        # Centres straddling a rounding boundary produced 4 columns on a live run.
+        badges = [
+            _Box(x=x, y=y, width=w, height=26, name="Lvl 1")
+            for x, y, w in [(100, 660, 56), (104, 465, 50), (98, 270, 60),
+                            (280, 660, 56), (286, 465, 48),
+                            (460, 660, 56), (455, 270, 62)]
+        ]
+        self.assertEqual(len(CharacterAscendScanTask.grid_columns(badges, self.W, self.H)), 3)
+
+
+class _Box:
+    def __init__(self, x, y, width, height, name):
+        self.x, self.y, self.width, self.height, self.name = x, y, width, height, name
+
 if __name__ == "__main__":
     unittest.main()

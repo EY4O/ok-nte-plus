@@ -1739,3 +1739,17 @@ msgstr "Current Character"
 
 msgid "材料组数"
 msgstr "Material Entries"
+
+msgid "扫描全部角色"
+msgstr "Scan All Characters"
+
+msgid "依次选择右侧角色列表中的每个角色并记录名称"
+msgstr ""
+"Select each character in the roster on the right in turn and record its name"
+
+msgid "角色数量"
+msgstr "Characters Found"
+
+msgid "打开角色网格, 依次选择每个角色并记录名称"
+msgstr ""
+"Open the character grid, select each character in turn and record its name"

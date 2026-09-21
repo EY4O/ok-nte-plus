@@ -1638,3 +1638,15 @@ msgstr ""
 
 msgid "材料组数"
 msgstr ""
+
+msgid "扫描全部角色"
+msgstr ""
+
+msgid "依次选择右侧角色列表中的每个角色并记录名称"
+msgstr ""
+
+msgid "角色数量"
+msgstr ""
+
+msgid "打开角色网格, 依次选择每个角色并记录名称"
+msgstr ""

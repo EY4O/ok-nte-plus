@@ -45,6 +45,11 @@ its owned/needed counts. It then opens each material to read its name and its in
 **Source**, for example `Anomaly Hunt "Serenetti"`. That gives the full chain of
 character to material to the activity that drops it, without relying on external guides.
 
+With **Scan All Characters** enabled it instead opens the character grid (the grid button
+at the bottom right of the `C` menu) and selects every character you own in turn,
+recording their names. This currently lists the roster only; reading each character's
+ascension in the same pass is in progress.
+
 **Anomaly Material Scan** reads the four Anomaly Zone tabs on the `F1` page and records
 the domains each one offers, so a material's source can later be resolved to a task
 configuration.
