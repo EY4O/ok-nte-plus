@@ -12,12 +12,13 @@ class CharacterAscendScanTask(NTEOneTimeTask, BaseNTETask):
     material shows a Source line such as 'Anomaly Hunt "Headless Rider"'. That removes
     the need for scraped build data and for a hand written material-to-domain table.
 
-    Slice 1 is deliberately narrow: open C, click Ascend, log what is on screen. It does
-    not switch characters and does not open the per-material popups yet.
+    Reads only the character currently open in the C menu; it does not switch
+    characters yet.
 
-    It never clicks a confirm control. The Ascend screen carries a confirm button in the
-    same place this task reads text from, and pressing it would consume materials, so
-    the only clicks here are C, Ascend, and the back arrow.
+    Clicks: C, the Ascend button, and each material icon to open its popup, closed again
+    with Esc. It never clicks a control that spends resources. The Ascend screen carries
+    a confirm button and a Material Conversion button below the cost row; icon clicks are
+    derived from each material's own count box, so they can only land on the icon row.
     """
 
     # C menu, character detail page.
