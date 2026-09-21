@@ -1739,3 +1739,22 @@ msgstr "Current Character"
 
 msgid "材料组数"
 msgstr "Material Entries"
+
+msgid "删除方案"
+msgstr "Delete Preset"
+
+msgid "检测到该方案包含外置代码，是否同时删除对应的代码文件?"
+msgstr ""
+"This preset includes external code. Delete the matching code files as well?"
+
+msgid "全部删除"
+msgstr "Delete All"
+
+msgid "仅删除方案"
+msgstr "Delete Preset Only"
+
+msgid "方案已删除"
+msgstr "Preset Deleted"
+
+msgid "部分外置代码删除失败: {}"
+msgstr "Failed to delete some external code: {}"

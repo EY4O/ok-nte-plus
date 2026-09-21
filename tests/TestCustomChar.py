@@ -388,6 +388,49 @@ class TestCustomChar(TaskTestCase):
         self.assertEqual(tab.preset_list.currentItem().data(Qt.ItemDataRole.UserRole), second["id"])
         self.assertFalse(tab.preset_list.currentItem().isHidden())
 
+    def test_team_manager_can_delete_preset_with_its_external_code(self):
+        tab = TeamManagerTab(manager=self.manager)
+        preset = self.manager.create_team_preset("external team")
+        preset["slots"][0]["impl_id"] = "external:team/hero"
+        preset["slots"][1]["impl_id"] = "external:team/hero"
+        tab.current_preset_id = preset["id"]
+        dialog = MagicMock()
+        dialog.exec.return_value = True
+
+        with (
+            patch.object(tab, "_current_preset", return_value=preset),
+            patch("src.ui.TeamManagerTab.MessageBox", return_value=dialog),
+            patch.object(
+                self.manager, "delete_external_impl_and_references", return_value=True
+            ) as delete_external,
+        ):
+            tab.on_delete_preset()
+
+        delete_external.assert_called_once_with("external:team/hero")
+        self.assertFalse(
+            any(item["id"] == preset["id"] for item in self.manager.get_team_presets())
+        )
+
+    def test_team_manager_can_keep_external_code_when_deleting_preset(self):
+        tab = TeamManagerTab(manager=self.manager)
+        preset = self.manager.create_team_preset("external team")
+        preset["slots"][0]["impl_id"] = "external:team/hero"
+        tab.current_preset_id = preset["id"]
+        dialog = MagicMock()
+        dialog.exec.return_value = False
+
+        with (
+            patch.object(tab, "_current_preset", return_value=preset),
+            patch("src.ui.TeamManagerTab.MessageBox", return_value=dialog),
+            patch.object(self.manager, "delete_external_impl_and_references") as delete_external,
+        ):
+            tab.on_delete_preset()
+
+        delete_external.assert_not_called()
+        self.assertFalse(
+            any(item["id"] == preset["id"] for item in self.manager.get_team_presets())
+        )
+
     def test_team_manager_preset_slot_keeps_implementation_when_character_is_cleared(self):
         tab = TeamManagerTab(manager=self.manager)
         combo_id = self.manager.add_combo("combo_auto_select", "skill")
