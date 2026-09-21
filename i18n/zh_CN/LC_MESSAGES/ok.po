@@ -1174,7 +1174,7 @@ msgid "已从列表移除"
 msgstr "已从列表移除"
 
 msgid "已删除"
-msgstr "已删除"
+msgstr ""
 
 msgid "已填入"
 msgstr "已填入"
@@ -1733,4 +1733,22 @@ msgid "重新打开日常任务页即可看到新设置"
 msgstr ""
 
 msgid "扫描中, 请保持游戏窗口在前台..."
+msgstr ""
+
+msgid "删除方案"
+msgstr ""
+
+msgid "检测到该方案包含外置代码，是否同时删除对应的代码文件?"
+msgstr ""
+
+msgid "全部删除"
+msgstr ""
+
+msgid "仅删除方案"
+msgstr ""
+
+msgid "方案已删除"
+msgstr ""
+
+msgid "部分外置代码删除失败: {}"
 msgstr ""
