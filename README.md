@@ -33,6 +33,36 @@ English | [简体中文](README_cn.md)
 
 Changes in this fork that are not in upstream [BnanZ0/ok-nte](https://github.com/BnanZ0/ok-nte). Newest first.
 
+### Character Builder tab
+
+A **Char Builder** tab under Character Center. Tick the characters you want to build and
+it lists what their next ascension is still short of, where each material drops, and
+which daily task farms it.
+
+- Materials are counted against your shared inventory, so two characters needing 24 of
+  the same item with 27 owned show 21 short, not 0.
+- Anomaly Hunt sources map to the Anomaly Hunts target (Black Tome, Headless Rider,
+  Serenetti, Sea Prisoner, Nestbound Bird, Swallowtail, Beat King). Characters still
+  below their level cap map to Anomaly Zone set to Character Experience.
+- "Anomaly Drop" materials (the Whispers / Silhouette / Numeral family) have no task that
+  targets them, so they are listed as manual farming. Selection boxes, crafting and shop
+  exchanges are not treated as farming routes.
+- **Apply to Daily Tasks** shows a before/after preview and then writes only the Anomaly
+  Hunts target and the Anomaly Zone reward setting in Daily Tasks (shared by every
+  profile). The two tasks share one daily slot, so which one runs is still chosen on the
+  Daily Tasks page.
+- **Rescan All Characters** runs Character Ascend Scan over the whole roster and reloads.
+
+Material Conversion is never used. The plan is sized by each material's raw shortfall
+and only raw materials are farmed. Substats are not shown yet; the scan does not read
+them.
+
+The Character Ascend Scan now reads every character's ascension in one run: a first pass
+over the character grid records each character's level and whether it shows Ascend or
+Level Up, and a second pass opens Ascend only for the characters that need it. Material
+names spanning two lines, sources below the fold of the item popup, and the next level cap
+are all read. Scan results are also no longer wiped when ok-nte starts.
+
 ### Character Builder groundwork (scanners)
 
 Two read-only scan tasks that read progression data out of the game. They are the data
@@ -46,9 +76,8 @@ its owned/needed counts. It then opens each material to read its name and its in
 character to material to the activity that drops it, without relying on external guides.
 
 With **Scan All Characters** enabled it instead opens the character grid (the grid button
-at the bottom right of the `C` menu) and selects every character you own in turn,
-recording their names. This currently lists the roster only; reading each character's
-ascension in the same pass is in progress.
+at the bottom right of the `C` menu) and reads every character you own, writing
+`configs/CharacterAscendMap.json`.
 
 **Anomaly Material Scan** reads the four Anomaly Zone tabs on the `F1` page and records
 the domains each one offers, so a material's source can later be resolved to a task

@@ -1,8 +1,7 @@
-from ok.util.config import Config
-
 from src.tasks.AnomalyTask import AnomalyTask
 from src.tasks.BaseNTETask import BaseNTETask
 from src.tasks.NTEOneTimeTask import NTEOneTimeTask
+from src.utils.result_config import ResultConfig
 
 
 class AnomalyMaterialScanTask(NTEOneTimeTask, BaseNTETask):
@@ -38,7 +37,7 @@ class AnomalyMaterialScanTask(NTEOneTimeTask, BaseNTETask):
         self.material_map = None
 
     def on_create(self):
-        self.material_map = Config(self.MAP_FILE_NAME, {})
+        self.material_map = ResultConfig(self.MAP_FILE_NAME)
 
     def run(self):
         super().run()

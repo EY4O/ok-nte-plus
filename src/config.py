@@ -237,6 +237,7 @@ config = {
         ["src.ui.DailyRoutineTab", "DailyRoutineTab"],
         ["src.ui.GiftManagerTab", "GiftManagerTab"],
         ["src.ui.CharHubTab", "CharHubTab"],
+        ["src.ui.CharacterBuilderTab", "CharacterBuilderTab"],
         ["src.ui.MidiPlayerTab", "MidiPlayerTab"],
         # ['src.ui.MyTab', 'MyTab'], #可选, 自定义UI, 显示在侧边栏
     ],

@@ -1753,3 +1753,92 @@ msgstr "Characters Found"
 msgid "打开角色网格, 依次选择每个角色并记录名称"
 msgstr ""
 "Open the character grid, select each character in turn and record its name"
+
+msgid "打开角色网格, 依次读取每个角色的突破需求"
+msgstr ""
+"Open the character grid and read every character's ascension requirements in"
+" turn"
+
+msgid "角色养成"
+msgstr "Char Builder"
+
+msgid "全选可突破"
+msgstr "Select Ascend-ready"
+
+msgid "清除"
+msgstr "Clear"
+
+msgid "重新扫描全部角色"
+msgstr "Rescan All Characters"
+
+msgid "所需材料"
+msgstr "Materials Needed"
+
+msgid "材料"
+msgstr "Material"
+
+msgid "缺少"
+msgstr "Short"
+
+msgid "获取途径"
+msgstr "Farm At"
+
+msgid "应用到日常任务"
+msgstr "Apply to Daily Tasks"
+
+msgid "设置异象追猎目标"
+msgstr "Set Anomaly Hunt target"
+
+msgid "将异象界域设为角色经验"
+msgstr "Set Anomaly Zone to Character Experience"
+
+msgid "异象界域与异象追猎共用一个日常位置, 请在日常任务页选择执行哪一个。从不使用材料转换, 只刷取原始材料。"
+msgstr ""
+"Anomaly Zone and Anomaly Hunts share one Daily Tasks slot; choose which one "
+"runs on the Daily Tasks page. Material Conversion is never used; only raw "
+"materials are farmed."
+
+msgid "应用"
+msgstr "Apply"
+
+msgid "共 {} 名角色"
+msgstr "{} characters"
+
+msgid "尚无扫描结果, 请点击重新扫描全部角色"
+msgstr "No scan results yet. Click Rescan All Characters."
+
+msgid "可突破"
+msgstr "Ascend"
+
+msgid "需要经验"
+msgstr "Needs EXP"
+
+msgid "手动: 野外异象掉落"
+msgstr "Manual: Anomaly Drop in the open world"
+
+msgid "手动"
+msgstr "Manual"
+
+msgid "勾选角色以查看所需材料"
+msgstr "Tick characters to see what they need"
+
+msgid "所选角色的突破材料已足够"
+msgstr "The selected characters already have enough materials"
+
+msgid "没有需要更改的设置"
+msgstr "Nothing to change"
+
+msgid "日常任务未就绪"
+msgstr "Daily Tasks is not ready yet"
+
+msgid "日常任务已是这些设置"
+msgstr "Daily Tasks already uses these settings"
+
+msgid "已应用到日常任务"
+msgstr "Applied to Daily Tasks"
+
+msgid "重新打开日常任务页即可看到新设置"
+msgstr "Reopen the Daily Tasks page to see the new settings"
+
+msgid "扫描中, 请保持游戏窗口在前台..."
+msgstr "Scanning; keep the game window in front..."
